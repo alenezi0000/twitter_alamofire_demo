@@ -16,7 +16,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
+
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -24,13 +27,31 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.estimatedRowHeight = 100
         
         APIManager.shared.getHomeTimeLine { (tweets, error) in
+            
             if let tweets = tweets {
                 self.tweets = tweets
                 self.tableView.reloadData()
             } else if let error = error {
                 print("Error getting home timeline: " + error.localizedDescription)
+                
             }
         }
+    }
+    
+
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        
+        let url = URL(string: "https://api.twitter.com/oauth/request_token")!
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            self.tableView.reloadData()
+            refreshControl.endRefreshing()
+           
+        
+            
+        }
+        task.resume()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,6 +80,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         APIManager.shared.logout()
     }
     
+    @IBOutlet weak var newsTap: UIBarButtonItem!
     
     /*
      // MARK: - Navigation

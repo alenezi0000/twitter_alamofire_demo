@@ -15,8 +15,8 @@ import KeychainAccess
 class APIManager: SessionManager {
     
     // MARK: TODO: Add App Keys
-    static let consumerKey = "YOUR_KEY_HERE"
-    static let consumerSecret = "YOUR_SECRET_HERE"
+    static let consumerKey = "5AItS7O6XxuJ7cJPeWJ0e3VWk"
+    static let consumerSecret = "7yVgsbwIZFQk642uInLX56pUz5MhSIADEZjL7n3dPIOjcQIpMr"
 
     static let requestTokenURL = "https://api.twitter.com/oauth/request_token"
     static let authorizeURL = "https://api.twitter.com/oauth/authorize"
@@ -26,6 +26,8 @@ class APIManager: SessionManager {
     
     // MARK: Twitter API methods
     func login(success: @escaping () -> (), failure: @escaping (Error?) -> ()) {
+        
+        
         
         // Add callback url to open app when returning from Twitter login on web
         let callbackURL = URL(string: APIManager.callbackURLString)!
@@ -56,6 +58,7 @@ class APIManager: SessionManager {
         // TODO: Clear current user by setting it to nil
 
         NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
+        
     }
 
     func getCurrentAccount(completion: @escaping (User?, Error?) -> ()) {

@@ -33,8 +33,8 @@ open class OAuth1Swift: OAuthSwift {
     }
 
     public convenience init?(parameters: ConfigParameters){
-        guard let consumerKey = parameters["consumerKey"], let consumerSecret = parameters["consumerSecret"],
-            let requestTokenUrl = parameters["requestTokenUrl"], let authorizeUrl = parameters["authorizeUrl"], let accessTokenUrl = parameters["accessTokenUrl"] else {
+        guard let consumerKey = parameters["gGDAcTRnj002YzdXvqlb9Qd24"], let consumerSecret = parameters["c14OGOJQWXbAqGDB8DfsTp4fUnRKiFYxzj7hOlXOriIjA293kJ"],
+            let requestTokenUrl = parameters["https://api.twitter.com/oauth/request_token"], let authorizeUrl = parameters["https://api.twitter.com/oauth/authorize"], let accessTokenUrl = parameters["https://api.twitter.com/oauth/access_token"] else {
             return nil
         }
         self.init(consumerKey:consumerKey, consumerSecret: consumerSecret,
